@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Nguyễn Việt Hùng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- THIẾT LẬP MÀU SẮC & CƠ BẢN --- */
+        :root {
+            /* Tông màu trầm (Slate Theme) - Refined */
+            --bg-body: #0f172a;       /* Darker Slate */
+            --bg-card: #1e293b;       /* Slate 800 */
+            --bg-card-hover: #334155; /* Slate 700 */
+            --text-main: #e2e8f0;     /* Slate 200 */
+            --text-muted: #94a3b8;    /* Slate 400 */
+            --accent: #38bdf8;        /* Sky 400 */
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --secondary: #64748b;     /* Slate 500 */
+            
+            --padding-section: 100px 20px;
+            --max-width: 1100px;
+            --nav-height: 80px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
+
+        /* --- HEADER & NAV --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        nav {
+            max-width: var(--max-width);
+            height: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            color: var(--accent); 
+            font-family: 'Fira Code', monospace;
+            letter-spacing: -1px;
+        }
+        
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+            color: var(--text-main); 
+            position: relative;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::before { width: 100%; }
+
+        /* --- GENERAL SECTION STYLES --- */
+        section {
+            padding: var(--padding-section);
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-right: 20px;
+            white-space: nowrap;
+        }
+        
+        .section-header h2 span { color: var(--accent); font-family: 'Fira Code', monospace; font-size: 1.5rem; margin-right: 10px; }
+
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 300px;
+            height: 1px;
+            background-color: var(--bg-card-hover);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 0;
+        }
+
+        .hero-intro {
+            color: var(--accent);
+            font-family: 'Fira Code', monospace;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .hero p {
+            max-width: 540px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            background-color: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(56, 189, 248, 0.1);
+            z-index: -1;
+            transition: width 0.3s ease;
+        }
+
+        .btn:hover::before { width: 100%; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2); }
+
+        /* --- ABOUT SECTION --- */
+        .about-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 50px;
+        }
+
+        .about-text p { margin-bottom: 15px; color: var(--text-muted); }
+        
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .skills-list li {
+            position: relative;
+            padding-left: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .skills-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .about-img-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .about-img {
+            width: 100%;
+            border-radius: 5px;
+            position: relative;
+            z-index: 2;
+            filter: grayscale(100%) contrast(1.1);
+            transition: filter 0.3s;
+            border: 2px solid var(--bg-card);
+        }
+
+        .about-img-wrapper:hover .about-img { filter: none; }
+
+        .about-img-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent);
+            border-radius: 5px;
+            z-index: 1;
+            transition: transform 0.3s;
+        }
+
+        .about-img-wrapper:hover::after { transform: translate(-10px, -10px); }
+
+        /* --- PROJECTS SECTION --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .project-card {
+            background-color: var(--bg-card);
+            padding: 2rem 1.75rem 5rem 1.75rem;
+            border-radius: 5px;
+            transition: transform 0.3s, background-color 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-7px);
+            background-color: var(--bg-card-hover);
+        }
+
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .folder-icon { font-size: 40px; color: var(--accent); }
+        
+        .project-links a {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-left: 10px;
+        }
+        .project-links a:hover { color: var(--accent); }
+
+        .project-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            color: var(--text-main);
+        }
+        
+        .project-card h3:hover { color: var(--accent); }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.8rem;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-muted);
+            position: absolute;
+            bottom: 2rem;
+            left: 1.75rem;
+            right: 1.75rem;
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact { text-align: center; padding-bottom: 100px; max-width: 600px; }
+        .contact h2 { font-size: 3rem; margin-bottom: 20px; }
+        .contact p { color: var(--text-muted); margin-bottom: 50px; font-size: 1.1rem; }
+
+        /* --- ANIMATIONS --- */
+        .hidden { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .show { opacity: 1; transform: translateY(0); }
+
+        /* Staggered delays for children */
+        .stagger-1 { transition-delay: 100ms; }
+        .stagger-2 { transition-delay: 200ms; }
+        .stagger-3 { transition-delay: 300ms; }
+        .stagger-4 { transition-delay: 400ms; }
+
+        /* Typing Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .hero h2 { font-size: 2.5rem; }
+            .about-content { grid-template-columns: 1fr; }
+            .about-img-wrapper { margin: 50px auto 0; }
+            .nav-links { display: none; } 
+            .section-header::after { width: 100px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <header id="header">
+        <nav>
+            <div class="logo">NVH.</div>
+            <ul class="nav-links">
+                <li><a href="#about"><span style="color: var(--accent)">01.</span> Giới thiệu</a></li>
+                <li><a href="#projects"><span style="color: var(--accent)">02.</span> Dự án</a></li>
+                <li><a href="#contact"><span style="color: var(--accent)">03.</span> Liên hệ</a></li>
+                <li><a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;">Resume</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-intro hidden stagger-1">Xin chào, mình là</p>
+            <h1 class="hidden stagger-2">Nguyễn Việt Hùng.</h1>
+            <h2 class="hidden stagger-3">I always strive to be better.
+</h2>
+            <p class="hidden stagger-4">
+                Mình hiện là sinh viên năm 3 ngành Khoa học Máy tính với định hướng theo đuổi lĩnh vực AI Engineering và Software Engineering. Mình có kinh nghiệm thực hành với xử lý dữ liệu, học máy, học sâu và các dự án NLP, Computer Vision. Trên tinh thần cầu tiến, chủ động và nỗ lực hoàn thiện bản thân trong mọi dự án.
+            </p>
+            <div class="hidden stagger-4">
+                <a href="#projects" class="btn">Xem Dự Án Của Tôi</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-header hidden">
+            <h2><span>01.</span> Về Bản Thân</h2>
+        </div>
+        <div class="about-content hidden">
+            <div class="about-text">
+                <p>Mình làm việc với tư duy hệ thống và định hướng dữ liệu. Mình chú trọng phân tích vấn đề ở mức logic, xây dựng giải pháp tối ưu và có thể mở rộng. Trong làm việc nhóm, mình đề cao quy trình rõ ràng và tinh thần hợp tác để nâng cao chất lượng sản phẩm.</p>
+                <p>Dưới đây là một vài công nghệ mình đã làm việc gần đây:</p>
+                <ul class="skills-list">
+                    <li>JavaScript</li>
+                    <li>TypeScript</li>
+                    <li>React</li>
+                    <li>Node.js</li>
+                    <li>Python</li>
+                    <li>PostgreSQL</li>
+                </ul>
+            </div>
+            <div class="about-img-wrapper">
+                <!-- Placeholder image, replace with actual image -->
+                <img src="https://via.placeholder.com/300x300/112240/64ffda?text=Avatar" alt="Profile Image" class="about-img">
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-header hidden">
+            <h2><span>02.</span> Dự Án Nổi Bật</h2>
+        </div>
+        <div class="project-grid">
+            
+            <!-- Project 1 -->
+            <div class="project-card hidden stagger-1">
+                <div class="project-top">
+                    <div class="folder-icon"><i class="far fa-folder"></i></div>
+                    <div class="project-links">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <h3>Website quản lý chuỗi cửa hàng thức ăn nhanh</h3>
+                <p>Hệ thống quản trị nội bộ, quảng cáo sản phẩm, đặt đơn, theo dõi đơn hàng, quản lý doanh thu và phân quyền.</p>
+                <div class="tech-stack">
+                    <span>Next.js</span>
+                    <span>Supabase - PostgreSQL</span>
+                    <span>Node.js</span>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card hidden stagger-2">
+                <div class="project-top">
+                    <div class="folder-icon"><i class="far fa-folder"></i></div>
+                    <div class="project-links">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <h3>Website hỗ trợ lên lịch & gợi ý địa điểm</h3>
+                <p>Tích hợp API Google và OpenStreetMap để tối ưu lịch hẹn và đề xuất địa điểm cho nhóm</p>
+                <div class="tech-stack">
+                    <span>React + Vite</span>
+                    <span>SQL Server</span>
+                    <span>Node.js</span>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card hidden stagger-3">
+                <div class="project-top">
+                    <div class="folder-icon"><i class="far fa-folder"></i></div>
+                    <div class="project-links">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <h3>Hệ thống phát hiện khuôn mặt & khẩu trang</h3>
+                <p>Xác định đeo/không đeo khẩu trang phục vụ giám sát an toàn.</p>
+                <div class="tech-stack">
+                    <span>Python</span>
+                    <span>PyTorch</span>
+                    <span>Streamlit</span>
+                </div>
+            </div>
+
+             <!-- Project 4 -->
+             <div class="project-card hidden stagger-1">
+                <div class="project-top">
+                    <div class="folder-icon"><i class="far fa-folder"></i></div>
+                    <div class="project-links">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <h3>Ứng dụng phân loại động vật biển</h3>
+                <p>Mô hình CV hỗ trợ giáo dục và hiện đại hóa hoạt động đánh bắt bền vững.</p>
+                <div class="tech-stack">
+                    <span>Python</span>
+                    <span>TensorFlow</span>
+                    <span>Streamlit</span>
+                </div>
+            </div>
+
+
+            <!-- Project 5 -->
+             <div class="project-card hidden stagger-1">
+                <div class="project-top">
+                    <div class="folder-icon"><i class="far fa-folder"></i></div>
+                    <div class="project-links">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <h3>Cải tiến ứng dụng phân loại bệnh trên lá trà</h3>
+                <p>Sử dụng các mô hình học sâu hiện đại để cải thiện mô hình phân loại bệnh dựa trên hình ảnh để hỗ trợ nông nghiệp chính xác.</p>
+                <div class="tech-stack">
+                    <span>Python</span>
+                    <span>PyTorch</span>
+                    <span>Streamlit</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact hidden">
+        <p style="color: var(--accent); font-family: 'Fira Code', monospace;">03. What's Next?</p>
+        <h2>Liên Hệ</h2>
+        <p>
+            Mình hiện đang tìm kiếm cơ hội thực tập và cộng tác trong các dự án mới. Hộp thư của mình luôn mở, dù bạn có câu hỏi hay chỉ muốn nói lời chào, mình sẽ cố gắng trả lời sớm nhất có thể!
+        </p>
+        <a href="mailto:viethung.nguyen.cs@gmail.com" class="btn">Gửi Email Cho Tôi</a>
+        <div style="margin-top: 100px; font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--text-muted);">
+            <p>Designed & Built by Nguyễn Việt Hùng</p>
+        </div>
+    </section>
+
+    <script>
+        // --- SCROLL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+
+        // --- HEADER SCROLL EFFECT ---
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll <= 0) {
+                header.style.transform = "translateY(0)";
+                header.style.boxShadow = "none";
+            } else if (currentScroll > lastScroll) {
+                // Scroll down
+                header.style.transform = "translateY(-100%)";
+            } else {
+                // Scroll up
+                header.style.transform = "translateY(0)";
+                header.style.boxShadow = "0 10px 30px -10px rgba(2,12,27,0.7)";
+            }
+            lastScroll = currentScroll;
+        });
+
+        // --- CANVAS BACKGROUND ANIMATION (Network/Constellation Effect) ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        
+        // Configuration
+        const particleCount = 60; // Số lượng điểm
+        const connectionDistance = 150; // Khoảng cách để nối dây
+        const mouseDistance = 200; // Khoảng cách tương tác chuột
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5; // Tốc độ chậm
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.5)'; // Màu accent mờ
+                ctx.fill();
+            }
+        }
+
+        // Init particles
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // Mouse interaction
+        let mouse = { x: null, y: null };
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Update and draw particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Draw connections
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(148, 163, 184, ${1 - distance / connectionDistance})`; // Fade out line
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+                
+                // Connect to mouse
+                if (mouse.x != null) {
+                    const dx = particles[i].x - mouse.x;
+                    const dy = particles[i].y - mouse.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < mouseDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${1 - distance / mouseDistance})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
